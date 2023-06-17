@@ -20,7 +20,7 @@ def run_epsilon_greedy_agent(
         # an agent navigates using greedy strategy
         action = choose_action_with_greedy_epsilon(estimated_action_rewards, epsilon)
         action_tracker.update_action_count(action)
-        current_reward = action_reward_simulator.get_reward(action)
+        current_reward = action_reward_simulator.generate_reward(action)
         updated_mean_reward = incremental_average_update(
             old_average=estimated_action_rewards[action],
             new_value=current_reward,

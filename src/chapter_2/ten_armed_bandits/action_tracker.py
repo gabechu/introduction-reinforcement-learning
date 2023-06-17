@@ -1,6 +1,5 @@
 from typing import List
 
-import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -49,7 +48,7 @@ class ActionTrackerPool(object):
             percentage_by_step.append(percentage)
         return percentage_by_step
 
-    def plot_percentage_of_optimal_action(self, optimal_action: int, label: str):
+    def plot_percentage_of_optimal_action(self, ax, optimal_action: int, label: str):
         """Plot mean rewards across different steps."""
-        plt.plot(self.calculate_percentage_of_optimal_action(optimal_action), label=label)
-        plt.legend()
+        ax.plot(self.calculate_percentage_of_optimal_action(optimal_action), label=label)
+        ax.legend()

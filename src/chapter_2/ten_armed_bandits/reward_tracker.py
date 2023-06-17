@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
 
@@ -36,7 +35,7 @@ class RewardTrackerPool(object):
         all_mean_rewards = np.array([tracker.mean_rewards for tracker in self._trackers])
         return all_mean_rewards.mean(axis=0)
 
-    def plot_mean_of_mean_rewards(self, label: str):
+    def plot_mean_of_mean_rewards(self, ax, label: str):
         """Plot mean rewards across different steps."""
-        plt.plot(self.calcualte_mean_of_mean_rewards(), label=label)
-        plt.legend()
+        ax.plot(self.calcualte_mean_of_mean_rewards(), label=label)
+        ax.legend()
