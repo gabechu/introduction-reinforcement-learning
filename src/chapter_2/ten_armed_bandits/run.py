@@ -3,7 +3,7 @@ normal distributions."""
 
 import matplotlib.pyplot as plt
 
-from src.chapter_2.ten_armed_bandits.action_reward_simulator import ActionRewardSimulator
+from src.chapter_2.ten_armed_bandits.action_reward_simulator import PoissonActionRewardSimulator
 from src.chapter_2.ten_armed_bandits.action_tracker import ActionTrackerPool
 from src.chapter_2.ten_armed_bandits.greedy_agent import run_epsilon_greedy_agent
 from src.chapter_2.ten_armed_bandits.reward_tracker import RewardTrackerPool
@@ -15,8 +15,8 @@ def main():
     num_bandits = 2000
     steps_per_bandit = 1000
     epsilons = [0.0, 0.01, 0.1]
-    action_reward_simulator = ActionRewardSimulator(num_actions, seed=None)
-    optimum = action_reward_simulator.get_optimal_action_and_reward()
+    action_reward_simulator = PoissonActionRewardSimulator(num_actions, seed=None)
+    _, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 10))
 
     for epsilon in epsilons:
         reward_tracker_pool = RewardTrackerPool(num_bandits)
@@ -32,11 +32,13 @@ def main():
                 steps=steps_per_bandit,
                 epsilon=epsilon,
             )
-        # # plot average reward
-        # reward_tracker_pool.plot_mean_of_mean_rewards(f"epsilon={epsilon}")
-        # plot % optimal acton
-        action_tracker_pool.plot_percentage_of_optimal_action(optimum["action"], label=f"epsilon={epsilon}")
 
+        # plot average reward
+        reward_tracker_pool.plot_mean_of_mean_rewards(ax1, f"epsilon={epsilon}")
+        # plot % optimal acton
+        action_tracker_pool.plot_percentage_of_optimal_action(
+            ax2, action_reward_simulator.get_optimal_action(), label=f"epsilon={epsilon}"
+        )
     plt.show()
 
 
