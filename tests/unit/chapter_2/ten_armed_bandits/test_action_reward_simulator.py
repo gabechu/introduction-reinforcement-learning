@@ -24,11 +24,6 @@ class TestNormalActionRewardSimulator(unittest.TestCase):
         actual = instance.generate_reward(4)
         assert -3 < actual < 3
 
-    def test_gen(self):
-        instance = NormalActionRewardSimulator(num_actions=5)
-        actual = instance.generate_reward(4)
-        assert -3 < actual < 3
-
     def test_get_optimal_reward(self):
         instance = NormalActionRewardSimulator(num_actions=3)
         actual = instance.get_optimal_reward()
