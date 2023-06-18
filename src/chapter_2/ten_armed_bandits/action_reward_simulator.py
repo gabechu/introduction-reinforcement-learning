@@ -52,3 +52,20 @@ class PoissonActionRewardSimulator(ActionRewardSimulator):
 
     def generate_reward(self, action: int) -> float:
         return self._stateful_generator.poisson(self._true_action_rewards[action], size=1).item()
+
+
+class RandomWalkRewardSimulator(ActionRewardSimulator):
+    """Simulating action rewards from normal distributions, where each action reward samples from
+    a distribution with a mean value that follows a random walk."""
+
+    def _set_true_rewards(self) -> npt.NDArray:
+        return np.zeros(self._num_actions)
+
+    def _update_true_rewards(self):
+        random_factors = self._stateful_generator.normal(0, 0.01, size=self._num_actions)
+        self._true_action_rewards += random_factors
+
+    def generate_reward(self, action: int) -> float:
+        reward = self._stateful_generator.normal(self._true_action_rewards[action], 1, size=1).item()
+        self._update_true_rewards()
+        return reward
