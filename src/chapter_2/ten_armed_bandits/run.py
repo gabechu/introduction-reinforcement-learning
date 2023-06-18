@@ -3,7 +3,7 @@ normal distributions."""
 
 import matplotlib.pyplot as plt
 
-from src.chapter_2.ten_armed_bandits.action_reward_simulator import PoissonActionRewardSimulator
+from src.chapter_2.ten_armed_bandits.action_reward_simulator import RandomWalkRewardSimulator
 from src.chapter_2.ten_armed_bandits.action_tracker import ActionTrackerPool
 from src.chapter_2.ten_armed_bandits.greedy_agent import run_epsilon_greedy_agent
 from src.chapter_2.ten_armed_bandits.reward_tracker import RewardTrackerPool
@@ -15,7 +15,7 @@ def main():
     num_bandits = 2000
     steps_per_bandit = 1000
     epsilons = [0.0, 0.01, 0.1]
-    action_reward_simulator = PoissonActionRewardSimulator(num_actions, seed=None)
+    action_reward_simulator = RandomWalkRewardSimulator(num_actions, seed=None)
     _, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 10))
 
     for epsilon in epsilons:
