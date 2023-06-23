@@ -1,10 +1,19 @@
+from enum import Enum
+
 import numpy as np
 import numpy.typing as npt
 
 from src.chapter_2.ten_armed_bandits.action_reward_simulator import ActionRewardSimulator
 from src.chapter_2.ten_armed_bandits.action_tracker import ActionTracker
 from src.chapter_2.ten_armed_bandits.reward_tracker import RewardTracker
-from src.chapter_2.ten_armed_bandits.utils import incremental_average_update
+from src.chapter_2.ten_armed_bandits.utils import weighted_incremental_average_update
+
+
+class StepSizeStrategy(Enum):
+    """Strategies for for incremental average update."""
+
+    CONSTANT = "CONSTANT"
+    RECIPROCAL = "RECIPROCAL"
 
 
 def run_epsilon_greedy_agent(
@@ -15,17 +24,24 @@ def run_epsilon_greedy_agent(
     epsilon: float,
 ) -> npt.NDArray[np.float64]:
     """Estimate rewards for a epsilon greedy agent."""
+    step_size_strategy = StepSizeStrategy.CONSTANT
+
     estimated_action_rewards = np.zeros(shape=action_tracker.num_actions)
     for _ in range(steps):
         # an agent navigates using greedy strategy
         action = choose_action_with_greedy_epsilon(estimated_action_rewards, epsilon)
         action_tracker.update_action_count(action)
         current_reward = action_reward_simulator.generate_reward(action)
-        updated_mean_reward = incremental_average_update(
-            old_average=estimated_action_rewards[action],
-            new_value=current_reward,
-            step=action_tracker.get_action_count(action),
-        )
+        if step_size_strategy == StepSizeStrategy.CONSTANT:
+            updated_mean_reward = weighted_incremental_average_update(
+                old_average=estimated_action_rewards[action], new_value=current_reward, weight=0.8
+            )
+        elif step_size_strategy == StepSizeStrategy.RECIPROCAL:
+            updated_mean_reward = weighted_incremental_average_update(
+                old_average=estimated_action_rewards[action],
+                new_value=current_reward,
+                weight=1 / action_tracker.get_action_count(action),
+            )
         estimated_action_rewards[action] = updated_mean_reward
 
         # collect stats
