@@ -11,13 +11,15 @@ from src.chapter_2.ten_armed_bandits.reward_tracker import RewardTrackerPool
 
 def main():
     """Main function."""
+    # configuration
     num_actions = 10
     num_bandits = 2000
     steps_per_bandit = 1000
     epsilons = [0.0, 0.01, 0.1]
     action_reward_simulator = NormalActionRewardSimulator(num_actions, seed=None)
-    _, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 10))
+    _, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 15))
 
+    # run program
     for epsilon in epsilons:
         reward_tracker_pool = RewardTrackerPool(num_bandits)
         action_tracker_pool = ActionTrackerPool(num_bandits=num_bandits, num_actions=num_actions)
@@ -33,12 +35,17 @@ def main():
                 epsilon=epsilon,
             )
 
-        # plot average reward
-        reward_tracker_pool.plot_mean_of_mean_rewards(ax1, f"epsilon={epsilon}")
-        # plot % optimal acton
+        # generate plots
+        plot_label = f"epsilon={epsilon}"
+        reward_tracker_pool.plot_mean_of_mean_rewards(ax1, plot_label)
         action_tracker_pool.plot_percentage_of_optimal_action(
-            ax2, action_reward_simulator.get_optimal_action(), label=f"epsilon={epsilon}"
+            ax2, action_reward_simulator.get_optimal_action(), plot_label
         )
+        action_tracker_pool.plot_percentage_of_exploit(ax3, plot_label)
+
+    ax1.set_tile("Average Reward")
+    ax2.set_tile("% Optimal Action")
+    ax3.set_tile("% Exploit")
     plt.show()
 
 
