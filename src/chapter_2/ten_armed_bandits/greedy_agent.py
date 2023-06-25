@@ -28,7 +28,7 @@ def run_epsilon_greedy_agent(
         updated_mean_reward = weighted_incremental_average_update(
             old_average=estimated_action_rewards[action],
             new_value=current_reward,
-            weight=1 / action_tracker.get_action_count(action),
+            weight=0.8,
         )
 
         estimated_action_rewards[action] = updated_mean_reward

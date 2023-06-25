@@ -16,9 +16,9 @@ def main():
     num_actions = 10
     num_bandits = 2000
     steps_per_bandit = 1000
-    epsilons = [0.0, 0.01, 0.1]
+    epsilons = [0.0]
     action_reward_simulator = NormalActionRewardSimulator(num_actions, seed=None)
-    initial_action_rewards = np.zeros(shape=num_actions)
+    initial_action_rewards = np.full(shape=num_actions, fill_value=5)
     _, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 15))
 
     # run program
