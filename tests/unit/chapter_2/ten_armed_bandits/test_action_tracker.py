@@ -1,4 +1,7 @@
 import unittest
+
+from numpy.testing import assert_array_equal
+
 from src.chapter_2.ten_armed_bandits.action_tracker import ActionTracker, ActionTrackerPool
 
 
@@ -50,7 +53,7 @@ class TestActionTrackerPool(unittest.TestCase):
     def test_initialised_action_tracker_pool_size(self):
         size = 10
         instance = ActionTrackerPool(num_bandits=size, num_actions=3)
-        actual = len(instance._trackers)
+        actual = len(instance.trackers)
         assert actual == size
 
     def test_get_action_tracker(self):
@@ -59,10 +62,55 @@ class TestActionTrackerPool(unittest.TestCase):
         assert isinstance(instance.get_action_tracker(1), ActionTracker)
         assert isinstance(instance.get_action_tracker(2), ActionTracker)
 
-    def test_calculate_percentage_of_optimal_action(self):
-        isinstance = ActionTrackerPool(num_actions=3, num_bandits=2)
-        mock_trackers = [ActionTracker(3), ActionTracker(3)]
-        mock_trackers[0].actions = [0, 2, 0, 2]
-        mock_trackers[1].actions = [0, 1, 0, 2]
-        isinstance._trackers = mock_trackers
-        assert isinstance.calculate_percentage_of_optimal_action(optimal_action=2) == [0.0, 0.5, 0.0, 1.0]
+    def test_calculate_percentage_of_optimal_action_for_one_bandit(self):
+        instance = ActionTrackerPool(num_actions=3, num_bandits=1)
+        # actions [0, 2, 0, 2]
+        instance.trackers[0].add_action(0)
+        instance.trackers[0].add_action(2)
+        instance.trackers[0].add_action(0)
+        instance.trackers[0].add_action(2)
+
+        actual = instance.calculate_percentage_of_optimal_action(optimal_action=2)
+        assert_array_equal(actual, [0, 1, 0, 1])
+
+    def test_calculate_percentage_of_optimal_action_for_multiple_bandit(self):
+        instance = ActionTrackerPool(num_actions=3, num_bandits=2)
+        # actions [0, 2, 0, 2]
+        instance.trackers[0].add_action(0)
+        instance.trackers[0].add_action(2)
+        instance.trackers[0].add_action(0)
+        instance.trackers[0].add_action(2)
+        # actions [0, 1, 0, 2]
+        instance.trackers[1].add_action(0)
+        instance.trackers[1].add_action(1)
+        instance.trackers[1].add_action(0)
+        instance.trackers[1].add_action(2)
+
+        actual = instance.calculate_percentage_of_optimal_action(optimal_action=2)
+        assert_array_equal(actual, [0.0, 0.5, 0.0, 1.0])
+
+    def test_calculate_percentage_of_exploit(self):
+        instance = ActionTrackerPool(num_actions=3, num_bandits=4)
+        # actions [1, 2, 1, 2]
+        instance.trackers[0].add_action(1)
+        instance.trackers[0].add_action(2)
+        instance.trackers[0].add_action(1)
+        instance.trackers[0].add_action(2)
+        # actions [0, 1, 0, 2]
+        instance.trackers[1].add_action(0)
+        instance.trackers[1].add_action(1)
+        instance.trackers[1].add_action(0)
+        instance.trackers[1].add_action(2)
+        # actions [1, 1, 1, 1]
+        instance.trackers[2].add_action(1)
+        instance.trackers[2].add_action(1)
+        instance.trackers[2].add_action(1)
+        instance.trackers[2].add_action(1)
+        # actions [2, 2, 1, 1]
+        instance.trackers[3].add_action(2)
+        instance.trackers[3].add_action(2)
+        instance.trackers[3].add_action(1)
+        instance.trackers[3].add_action(1)
+
+        actual = instance.calculate_percentage_of_exploit()
+        assert_array_equal(actual, [0.5, 0.25, 0.5])
