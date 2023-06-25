@@ -17,7 +17,7 @@ def run_epsilon_greedy_agent(
 ) -> npt.NDArray[np.float64]:
     """Estimate rewards for a epsilon greedy agent."""
 
-    estimated_action_rewards = initial_action_rewards
+    estimated_action_rewards = initial_action_rewards.copy()
     for _ in range(steps):
         # an agent navigates using greedy strategy
         action = choose_action_with_greedy_epsilon(estimated_action_rewards, epsilon)
