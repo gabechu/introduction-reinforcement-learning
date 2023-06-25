@@ -49,16 +49,16 @@ class NormalActionRewardSimulator(ActionRewardSimulator):
         return self._stateful_generator.standard_normal(size=self._num_actions)
 
     def generate_reward(self, action: int) -> float:
-        if len(self._cache.get(action)) == 0:
+        if len(self._cache[action]) == 0:
             del self.__dict__["_cache"]
-        return self._cache.get(action).pop()
+        return self._cache[action].pop()
 
 
 class PoissonActionRewardSimulator(ActionRewardSimulator):
     """Simulating action rewards from Poisson distributions."""
 
     @cached_property
-    def _cache(self):
+    def _cache(self) -> Dict[int, List]:
         return {
             action: list(self._stateful_generator.poisson(reward, size=50_000))
             for action, reward in enumerate(self._true_action_rewards)
@@ -68,9 +68,9 @@ class PoissonActionRewardSimulator(ActionRewardSimulator):
         return self._stateful_generator.poisson(3, size=self._num_actions)
 
     def generate_reward(self, action: int) -> float:
-        if len(self._cache.get(action)) == 0:
+        if len(self._cache[action]) == 0:
             del self.__dict__["_cache"]
-        return self._cache.get(action).pop()
+        return self._cache[action].pop()
 
 
 class RandomWalkRewardSimulator(ActionRewardSimulator):
