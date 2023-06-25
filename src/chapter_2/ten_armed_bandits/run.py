@@ -1,7 +1,7 @@
 """Implement an epsilon greedy algorithm simulated for a 10 armed bandit problem with actions sampled from
 normal distributions."""
-
 import matplotlib.pyplot as plt
+from pyinstrument import Profiler
 
 from src.chapter_2.ten_armed_bandits.action_reward_simulator import NormalActionRewardSimulator
 from src.chapter_2.ten_armed_bandits.action_tracker import ActionTrackerPool
@@ -43,11 +43,15 @@ def main():
         )
         action_tracker_pool.plot_percentage_of_exploit(ax3, plot_label)
 
-    ax1.set_tile("Average Reward")
-    ax2.set_tile("% Optimal Action")
-    ax3.set_tile("% Exploit")
-    plt.show()
+    ax1.title.set_text("Average Reward")
+    ax2.title.set_text("% Optimal Action")
+    ax3.title.set_text("% Exploit")
+    # plt.show()
 
 
 if __name__ == "__main__":
+    profiler = Profiler()
+    profiler.start()
     main()
+    profiler.stop()
+    profiler.print()

@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from functools import cached_property
 
 import numpy as np
 import numpy.typing as npt
@@ -36,11 +37,20 @@ class ActionRewardSimulator(ABC):
 class NormalActionRewardSimulator(ActionRewardSimulator):
     """Simulating action rewards from normal distributions."""
 
+    @cached_property
+    def _cache(self):
+        return {
+            action: list(self._stateful_generator.normal(reward, 1, size=50_000))
+            for action, reward in enumerate(self._true_action_rewards)
+        }
+
     def _set_true_rewards(self) -> npt.NDArray:
         return self._stateful_generator.standard_normal(size=self._num_actions)
 
     def generate_reward(self, action: int):
-        return self._stateful_generator.normal(self._true_action_rewards[action], 1, size=1).item()
+        if len(self._cache.get(action)) == 0:
+            del self.__dict__["_cache"]
+        return self._cache.get(action).pop()
 
 
 class PoissonActionRewardSimulator(ActionRewardSimulator):
