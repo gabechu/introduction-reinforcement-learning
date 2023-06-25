@@ -46,7 +46,7 @@ def main():
     ax1.title.set_text("Average Reward")
     ax2.title.set_text("% Optimal Action")
     ax3.title.set_text("% Exploit")
-    # plt.show()
+    plt.show()
 
 
 if __name__ == "__main__":
