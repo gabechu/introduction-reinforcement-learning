@@ -1,12 +1,14 @@
-:ghost:
+:sloth:	
 
 ### Description
+What:
 
-Describe your PR
+How:
 
+References: 
 
-### References
+---
 
-
-### Risks
-* [ None / Low / Medium / High ]
+### Code Checklist
+- [ ] tested
+- [ ] documented
