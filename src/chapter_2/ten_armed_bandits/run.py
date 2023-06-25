@@ -1,6 +1,7 @@
 """Implement an epsilon greedy algorithm simulated for a 10 armed bandit problem with actions sampled from
 normal distributions."""
 import matplotlib.pyplot as plt
+import numpy as np
 from pyinstrument import Profiler
 
 from src.chapter_2.ten_armed_bandits.action_reward_simulator import NormalActionRewardSimulator
@@ -17,6 +18,7 @@ def main():
     steps_per_bandit = 1000
     epsilons = [0.0, 0.01, 0.1]
     action_reward_simulator = NormalActionRewardSimulator(num_actions, seed=None)
+    initial_action_rewards = np.zeros(num_actions)
     _, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 15))
 
     # run program
@@ -31,6 +33,7 @@ def main():
                 action_reward_simulator=action_reward_simulator,
                 action_tracker=action_tracker,
                 reward_tracker=reward_tracker,
+                initial_action_rewards=initial_action_rewards,
                 steps=steps_per_bandit,
                 epsilon=epsilon,
             )

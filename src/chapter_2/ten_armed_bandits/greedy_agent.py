@@ -11,12 +11,13 @@ def run_epsilon_greedy_agent(
     action_reward_simulator: ActionRewardSimulator,
     action_tracker: ActionTracker,
     reward_tracker: RewardTracker,
+    initial_action_rewards: npt.NDArray,
     steps: int,
     epsilon: float,
 ) -> npt.NDArray[np.float64]:
     """Estimate rewards for a epsilon greedy agent."""
 
-    estimated_action_rewards = np.zeros(shape=action_tracker.num_actions)
+    estimated_action_rewards = initial_action_rewards
     for _ in range(steps):
         # an agent navigates using greedy strategy
         action = choose_action_with_greedy_epsilon(estimated_action_rewards, epsilon)
