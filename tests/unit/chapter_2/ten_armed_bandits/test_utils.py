@@ -16,7 +16,7 @@ def test_weighted_incremental_average_update_with_weight_greater_than_one():
     assert actual == 9
 
 
-def test_weighted_incremental_average_update_for_simple_average():
+def test_weighted_incremental_average_update_for_sample_average():
     actual = []
     targets = [1, 2, 3, 4, 5]
     avg = 0
