@@ -4,6 +4,6 @@ start-shell:
 unit-test:
 	PYTHONPATH=. poetry run pytest -vv ./tests/unit
 
-linting:
-	poetry run mypy src tests
-	poetry run flake8 src tests
+lint_typing_checks:
+	poetry run ruff src tests
+	poetry run pyright src tests
