@@ -12,14 +12,19 @@ seaborn = "^0.12.2"
 matplotlib = "^3.7.1"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.3.1"
-pytest-cov = "^4.1.0"
 pyinstrument = "^4.5.0"
 
+[tool.poetry.group.test.dependencies]
+pytest = "^7.3.1"
+pytest-cov = "^4.1.0"
 
 [tool.poetry.group.lint.dependencies]
 ruff = "^0.0.278"
 black = "^23.7.0"
+
+[tool.poetry.group.typing.dependencies]
+pyright = "^1.1.317"
+# Install jaxtyping for tensor if needed
 
 [build-system]
 requires = ["poetry-core"]

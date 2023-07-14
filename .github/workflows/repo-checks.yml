@@ -31,7 +31,10 @@ jobs:
           poetry install
       - name: Lint
         run: |
-          make linting
+          poetry run ruff src tests
+      - name: Typing
+        run: |
+          poetry run pyright src tests
       - name: Test with pytest
         run: |
           make unit-test

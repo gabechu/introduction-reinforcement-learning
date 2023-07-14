@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from functools import cached_property
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import numpy as np
 import numpy.typing as npt
@@ -9,7 +9,7 @@ import numpy.typing as npt
 class ActionRewardSimulator(ABC):
     """Base class for defining action reward distributions."""
 
-    def __init__(self, num_actions: int, seed: int = 22) -> None:
+    def __init__(self, num_actions: int, seed: Optional[int] = 22) -> None:
         self._seed = seed
         self._num_actions = num_actions
         self._true_action_rewards = self._set_true_rewards()
