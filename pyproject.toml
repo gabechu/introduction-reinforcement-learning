@@ -6,10 +6,11 @@ authors = ["gchu <gchu@zendesk.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9.1,<4.0"
+python = ">=3.9,<3.13"
 numpy = "^1.24.3"
 seaborn = "^0.12.2"
 matplotlib = "^3.7.1"
+scipy = "^1.11.1"
 
 [tool.poetry.group.dev.dependencies]
 pyinstrument = "^4.5.0"
