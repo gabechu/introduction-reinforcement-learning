@@ -1,4 +1,5 @@
 import unittest
+
 import numpy as np
 
 from src.chapter_2.ten_armed_bandits.action_reward_simulator import (
