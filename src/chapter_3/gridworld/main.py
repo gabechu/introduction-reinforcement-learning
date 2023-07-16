@@ -6,7 +6,7 @@ from src.chapter_3.gridworld.state_value_function import (
     get_state_value,
     update_state_value_matrix,
 )
-from src.chapter_3.gridworld.reward import evaluate_next_state_reward
+from src.chapter_3.gridworld.reward import evaluate_reward
 
 
 def calculate_new_state_value(
@@ -21,7 +21,7 @@ def calculate_new_state_value(
     new_state_value = 0
     for action in actions:
         next_state = regularize_state(get_next_state(action, state))
-        next_reward = evaluate_next_state_reward(next_state)
+        next_reward = evaluate_reward(current_state=state, action=action)
         next_state_value = action_probability * (
             next_reward
             + discount_factor * get_state_value(next_state, state_value_matrix)
@@ -37,12 +37,20 @@ if __name__ == "__main__":
     states = [State(x=x, y=y) for x in range(5) for y in range(5)]
 
     for i in range(1000):
+        diff = 0
         for state in states:
+            old_state_value = get_state_value(state, state_value_matrix)
             new_state_value = calculate_new_state_value(state, state_value_matrix, 0.9)
             update_state_value_matrix(
                 state=state,
                 new_state_value=new_state_value,
                 state_value_matrix=state_value_matrix,
             )
+            diff += np.absolute(new_state_value - old_state_value)
+        
+        if np.isclose(diff, 0):
+            print(f"Converged in {i + 1} steps")
+            break
+            
 
     print(state_value_matrix)

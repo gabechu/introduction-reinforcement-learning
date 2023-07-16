@@ -41,3 +41,9 @@ def regularize_state(state: State) -> State:
         return State(x=state.x, y=4)
     else:
         return state
+
+
+def is_state_valid(state: State) -> bool:
+    if 0 <= state.x <= 4 and 0 <= state.y <= 4:
+        return True
+    return False
