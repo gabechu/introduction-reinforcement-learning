@@ -1,12 +1,12 @@
 import numpy as np
 
 from src.chapter_3.gridworld.action import Action
+from src.chapter_3.gridworld.reward import evaluate_reward
 from src.chapter_3.gridworld.state import State, get_next_state, regularize_state
 from src.chapter_3.gridworld.state_value_function import (
     get_state_value,
     update_state_value_matrix,
 )
-from src.chapter_3.gridworld.reward import evaluate_reward
 
 
 def calculate_new_state_value(
@@ -47,10 +47,8 @@ if __name__ == "__main__":
                 state_value_matrix=state_value_matrix,
             )
             diff += np.absolute(new_state_value - old_state_value)
-        
-        if np.isclose(diff, 0):
-            print(f"Converged in {i + 1} steps")
-            break
-            
 
-    print(state_value_matrix)
+        if np.isclose(diff, 0):
+            print(f"Converged in {i + 1} steps...")
+            print(state_value_matrix)
+            break

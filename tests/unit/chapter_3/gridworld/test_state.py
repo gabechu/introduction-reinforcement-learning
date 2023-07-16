@@ -1,5 +1,10 @@
 from src.chapter_3.gridworld.action import Action
-from src.chapter_3.gridworld.state import State, get_next_state, regularize_state
+from src.chapter_3.gridworld.state import (
+    State,
+    get_next_state,
+    is_state_valid,
+    regularize_state,
+)
 
 
 def test_get_next_state_with_action_go_north_within_grid():
@@ -64,3 +69,11 @@ def test_regularize_state_for_state_x_off_grid():
 def test_regularize_state_for_state_y_off_grid():
     assert regularize_state(State(3, -1)) == State(3, 0)
     assert regularize_state(State(3, 5)) == State(3, 4)
+
+
+def test_is_state_valid_for_valid_state():
+    assert is_state_valid(State(3, 3)) is True
+
+
+def test_is_state_valid_for_invalid_state():
+    assert is_state_valid(State(-1, 0)) is False

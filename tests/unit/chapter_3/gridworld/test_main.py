@@ -1,7 +1,8 @@
-from src.chapter_3.gridworld.main import calculate_new_state_value
-from src.chapter_3.gridworld.state import State
 import numpy as np
 from pytest import fixture
+
+from src.chapter_3.gridworld.main import calculate_new_state_value
+from src.chapter_3.gridworld.state import State
 
 
 @fixture
