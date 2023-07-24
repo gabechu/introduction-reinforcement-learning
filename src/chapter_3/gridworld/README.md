@@ -2,7 +2,7 @@
 We have a 5x5 grid world and our goal is to calculate state-value function for a random policy. For more detailed information, refer to Example 3.5: Gridworld in the book.
 
 # How:
-We apply value iteration to the random policy.
+We apply value iteration to the random policy. Run `poetry run pytest -vv ./tests/unit` to execute the program.
 
 # Outcome:
 Converged in 109 steps...

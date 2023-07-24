@@ -18,17 +18,16 @@ def calculate_new_state_value(
     actions = [Action.NORTH, Action.SOUTH, Action.EAST, Action.WEST]
     action_probability = 1 / len(actions)
 
-    new_state_value = 0
+    v_value = 0
     for action in actions:
         next_state = regularize_state(get_next_state(action, state))
         next_reward = evaluate_reward(current_state=state, action=action)
-        next_state_value = action_probability * (
-            next_reward
-            + discount_factor * get_state_value(next_state, state_value_matrix)
-        )
-        new_state_value += next_state_value
+        # calcualte q_\pi(s, a)
+        q_value =  next_reward + discount_factor * get_state_value(next_state, state_value_matrix)
+        # update v_\pi(s)
+        v_value += action_probability * q_value
 
-    return new_state_value
+    return v_value
 
 
 if __name__ == "__main__":
