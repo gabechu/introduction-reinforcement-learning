@@ -21,3 +21,7 @@
 
 # Blog
 1. [Constrained MDPs and the reward hypothesis](https://readingsml.blogspot.com/2020/03/constrained-mdps-and-reward-hypothesis.html)
+
+# Implementation
+1. [Alpha Zero General (any game, any framework!)](https://github.com/suragnair/alpha-zero-general)
+1. [OpenSpiel: A Framework for Reinforcement Learning in Games](https://github.com/deepmind/open_spiel)
