@@ -5,8 +5,8 @@
 # | cold        | sun     | 0.05    |
 # | cold        | rain    | 0.15    |
 
-from typing import Dict, Tuple
 from enum import Enum
+from typing import Dict, Tuple
 
 
 class Temperature(str, Enum):
