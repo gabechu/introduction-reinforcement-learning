@@ -18,6 +18,7 @@ def get_next_state(action: Action, current_state: State) -> State:
     elif current_state == State(x=0, y=3):
         return State(x=2, y=3)
 
+    # TODO: use match case
     # normal state transitions
     if action == action.NORTH:
         return State(x=current_state.x - 1, y=current_state.y)
@@ -27,6 +28,8 @@ def get_next_state(action: Action, current_state: State) -> State:
         return State(x=current_state.x, y=current_state.y + 1)
     elif action == action.WEST:
         return State(x=current_state.x, y=current_state.y - 1)
+    else:
+        raise Exception(f"Invalid action: {action}")
 
 
 def regularize_state(state: State) -> State:
