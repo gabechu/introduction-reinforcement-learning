@@ -32,7 +32,7 @@ class ActionRewardSimulator(ABC):
 
     def get_optimal_reward(self) -> float:
         """Get the optimal reward value based on the true action rewards."""
-        return np.max(self._true_action_rewards)
+        return np.max(self._true_action_rewards)  # type: ignore
 
 
 class NormalActionRewardSimulator(ActionRewardSimulator):

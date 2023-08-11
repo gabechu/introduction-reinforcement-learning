@@ -6,7 +6,7 @@ authors = ["gchu <gchu@zendesk.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"
+python = ">=3.9,<3.11"
 numpy = "^1.24.3"
 seaborn = "^0.12.2"
 matplotlib = "^3.7.1"
@@ -24,8 +24,7 @@ ruff = "^0.0.278"
 black = "^23.7.0"
 
 [tool.poetry.group.typing.dependencies]
-pyright = "^1.1.317"
-# Install jaxtyping for tensor if needed
+pyright = "^1.1.321"
 
 [build-system]
 requires = ["poetry-core"]
@@ -37,4 +36,7 @@ select = [
   "F",  # pyflakes
   "I",  # isort
 ]
+line-length = 120
+
+[tool.black]
 line-length = 120
