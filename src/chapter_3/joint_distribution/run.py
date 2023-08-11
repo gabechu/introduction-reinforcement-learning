@@ -6,7 +6,6 @@
 # | cold        | rain    | 0.15    |
 
 from enum import StrEnum
-from typing import TypedDict
 
 
 class Temperature(StrEnum):
