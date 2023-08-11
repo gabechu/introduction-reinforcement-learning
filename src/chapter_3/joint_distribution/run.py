@@ -5,35 +5,34 @@
 # | cold        | sun     | 0.05    |
 # | cold        | rain    | 0.15    |
 
-from enum import Enum
-from typing import Dict, Tuple
+from enum import StrEnum
+from typing import TypedDict
 
 
-class Temperature(str, Enum):
+class Temperature(StrEnum):
     HOT = "hot"
     COLD = "cold"
 
 
-class Weather(str, Enum):
+class Weather(StrEnum):
     SUN = "sun"
     RAIN = "rain"
 
 
-def get_temperature_distribution(
-    joint_distribution: Dict[Tuple[Temperature, Weather], float]
-) -> Dict[Temperature, float]:
+def get_temperature_distribution(joint_distribution: dict) -> dict[Temperature, float]:
     return {
-        temperature: sum(joint_distribution[temperature, weather] for weather in Weather) for temperature in Temperature
+        temperature: sum(joint_distribution[(temperature, weather)] for weather in Weather)
+        for temperature in Temperature
     }
 
 
-def get_weather_distribution(joint_distribution: Dict[Tuple[Temperature, Weather], float]) -> Dict[Weather, float]:
+def get_weather_distribution(joint_distribution: dict) -> dict[Weather, float]:
     return {
-        weather: sum(joint_distribution[temperature, weather] for temperature in Temperature) for weather in Weather
+        weather: sum(joint_distribution[(temperature, weather)] for temperature in Temperature) for weather in Weather
     }
 
 
-def get_conditional_distribution(joint_distribution: Dict[Tuple[Temperature, Weather], float]) -> Dict[Tuple, float]:
+def get_conditional_distribution(joint_distribution: dict) -> dict[tuple, float]:
     temperature_distribution = get_temperature_distribution(joint_distribution)
     weather_distribution = get_weather_distribution(joint_distribution)
 
@@ -41,10 +40,10 @@ def get_conditional_distribution(joint_distribution: Dict[Tuple[Temperature, Wea
     for temperature in Temperature:
         for weather in Weather:
             conditional_distribution[(temperature, weather)] = (
-                joint_distribution[temperature, weather] / weather_distribution[weather]
+                joint_distribution[(temperature, weather)] / weather_distribution[weather]
             )
             conditional_distribution[(weather, temperature)] = (
-                joint_distribution[temperature, weather] / temperature_distribution[temperature]
+                joint_distribution[(temperature, weather)] / temperature_distribution[temperature]
             )
 
     return conditional_distribution
