@@ -1,3 +1,5 @@
+import logging
+
 import numpy as np
 
 from src.chapter_3.gridworld.action import Action
@@ -7,7 +9,6 @@ from src.chapter_3.gridworld.state_value_function import (
     get_state_value,
     update_state_value_matrix,
 )
-import logging
 
 logger = logging.getLogger(__file__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
