@@ -12,24 +12,23 @@ class State:
 def get_next_state(action: Action, current_state: State) -> State:
     """Get the location of the agent after taking the action, regardless of whether
     the agent goes off the grid or not."""
-    # special state transitions
-    if current_state == State(x=0, y=1):
-        return State(x=4, y=1)
-    elif current_state == State(x=0, y=3):
-        return State(x=2, y=3)
+    # special state transitions -- shortcuts in the game
+    match current_state:
+        case State(x=0, y=1):
+            return State(x=4, y=1)
+        case State(x=0, y=3):
+            return State(x=2, y=3)
 
-    # TODO: use match case
     # normal state transitions
-    if action == action.NORTH:
-        return State(x=current_state.x - 1, y=current_state.y)
-    elif action == action.SOUTH:
-        return State(x=current_state.x + 1, y=current_state.y)
-    elif action == action.EAST:
-        return State(x=current_state.x, y=current_state.y + 1)
-    elif action == action.WEST:
-        return State(x=current_state.x, y=current_state.y - 1)
-    else:
-        raise Exception(f"Invalid action: {action}")
+    match action:
+        case action.NORTH:
+            return State(x=current_state.x - 1, y=current_state.y)
+        case action.SOUTH:
+            return State(x=current_state.x + 1, y=current_state.y)
+        case action.EAST:
+            return State(x=current_state.x, y=current_state.y + 1)
+        case action.WEST:
+            return State(x=current_state.x, y=current_state.y - 1)
 
 
 def regularize_state(state: State) -> State:
