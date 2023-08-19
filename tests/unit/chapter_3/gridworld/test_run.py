@@ -1,43 +1,72 @@
-import numpy as np
-from pytest import fixture
+from unittest import TestCase
 
-from src.chapter_3.gridworld.run import calculate_state_value_function
+import numpy as np
+
+from src.chapter_3.gridworld.run import Policy, calculate_state_value_function
 from src.chapter_3.gridworld.state import State
 
 
-@fixture
-def state_value_matrix() -> np.ndarray:
-    return np.array(
-        [
-            [3.3, 8.8, 4.4, 5.3, 1.5],
-            [1.5, 3.0, 2.3, 1.9, 0.5],
-            [0.1, 0.7, 0.7, 0.4, -0.4],
-            [-1.0, 0.4, -0.4, -0.6, -1.2],
-            [-1.9, -1.3, -1.2, -1.4, -2.0],
-        ]
-    )
+class TestStateValueFunctionForRandomPolicy(TestCase):
+    def setUp(self) -> None:
+        self.state_value_matrix = np.array(
+            [
+                [3.3, 8.8, 4.4, 5.3, 1.5],
+                [1.5, 3.0, 2.3, 1.9, 0.5],
+                [0.1, 0.7, 0.7, 0.4, -0.4],
+                [-1.0, 0.4, -0.4, -0.6, -1.2],
+                [-1.9, -1.3, -1.2, -1.4, -2.0],
+            ]
+        )
+
+    def test_state_A(self):
+        actual = calculate_state_value_function(State(0, 1), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
+        assert actual == 8.83
+
+    def test_state_B(self):
+        actual = calculate_state_value_function(State(0, 3), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
+        assert actual == 5.36
+
+    def test_state_00(self):
+        actual = calculate_state_value_function(State(0, 0), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
+        assert actual == 3.3025
+
+    def test_state_04(self):
+        actual = calculate_state_value_function(State(0, 4), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
+        assert actual == 1.48
+
+    def test_state_11(self):
+        actual = calculate_state_value_function(State(1, 1), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
+        assert actual == 2.9925
 
 
-def test_calculate_state_value_function_for_state_A(state_value_matrix):
-    actual = calculate_state_value_function(State(0, 1), state_value_matrix, 0.9)
-    assert actual == 8.83
+class TestStateValueFunctionForOptimalPolicy(TestCase):
+    def setUp(self) -> None:
+        self.state_value_matrix = np.array(
+            [
+                [22.0, 24.4, 22.0, 19.4, 17.5],
+                [19.8, 22.0, 19.8, 17.8, 16.0],
+                [17.8, 19.8, 17.8, 16.0, 14.4],
+                [16.0, 17.8, 16.0, 14.4, 13.0],
+                [14.4, 16.0, 14.4, 13.0, 11.7],
+            ]
+        )
 
+    def test_state_A(self):
+        actual = calculate_state_value_function(State(0, 1), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 24.4
 
-def test_calculate_state_value_function_for_state_B(state_value_matrix):
-    actual = calculate_state_value_function(State(0, 3), state_value_matrix, 0.9)
-    assert actual == 5.36
+    def test_state_B(self):
+        actual = calculate_state_value_function(State(0, 3), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 19.4
 
+    def test_state_00(self):
+        actual = calculate_state_value_function(State(0, 0), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 21.96
 
-def test_calculate_state_value_function_for_state_00(state_value_matrix):
-    actual = calculate_state_value_function(State(0, 0), state_value_matrix, 0.9)
-    assert actual == 3.3025
+    def test_state_04(self):
+        actual = calculate_state_value_function(State(0, 4), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 17.46
 
-
-def test_calculate_state_value_function_for_state_04(state_value_matrix):
-    actual = calculate_state_value_function(State(0, 4), state_value_matrix, 0.9)
-    assert actual == 1.48
-
-
-def test_calculate_state_value_function_for_state_11(state_value_matrix):
-    actual = calculate_state_value_function(State(1, 1), state_value_matrix, 0.9)
-    assert actual == 2.9925
+    def test_state_11(self):
+        actual = calculate_state_value_function(State(1, 1), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 21.96
