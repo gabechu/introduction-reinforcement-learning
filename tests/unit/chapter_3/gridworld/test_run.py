@@ -37,3 +37,36 @@ class TestStateValueFunctionForRandomPolicy(TestCase):
     def test_state_11(self):
         actual = calculate_state_value_function(State(1, 1), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
         assert actual == 2.9925
+
+
+class TestStateValueFunctionForOptimalPolicy(TestCase):
+    def setUp(self) -> None:
+        self.state_value_matrix = np.array(
+            [
+                [22.0, 24.4, 22.0, 19.4, 17.5],
+                [19.8, 22.0, 19.8, 17.8, 16.0],
+                [17.8, 19.8, 17.8, 16.0, 14.4],
+                [16.0, 17.8, 16.0, 14.4, 13.0],
+                [14.4, 16.0, 14.4, 13.0, 11.7],
+            ]
+        )
+
+    def test_state_A(self):
+        actual = calculate_state_value_function(State(0, 1), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 24.4
+
+    def test_state_B(self):
+        actual = calculate_state_value_function(State(0, 3), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 19.4
+
+    def test_state_00(self):
+        actual = calculate_state_value_function(State(0, 0), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 21.96
+
+    def test_state_04(self):
+        actual = calculate_state_value_function(State(0, 4), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 17.46
+
+    def test_state_11(self):
+        actual = calculate_state_value_function(State(1, 1), self.state_value_matrix, 0.9, Policy.OPTIMAL_POLICY)
+        assert actual == 21.96
