@@ -1,9 +1,8 @@
 from unittest import TestCase
 
 import numpy as np
-from pytest import fixture
 
-from src.chapter_3.gridworld.run import calculate_state_value_function_for_random_policy
+from src.chapter_3.gridworld.run import Policy, calculate_state_value_function
 from src.chapter_3.gridworld.state import State
 
 
@@ -20,21 +19,21 @@ class TestStateValueFunctionForRandomPolicy(TestCase):
         )
 
     def test_state_A(self):
-        actual = calculate_state_value_function_for_random_policy(State(0, 1), self.state_value_matrix, 0.9)
+        actual = calculate_state_value_function(State(0, 1), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
         assert actual == 8.83
 
     def test_state_B(self):
-        actual = calculate_state_value_function_for_random_policy(State(0, 3), self.state_value_matrix, 0.9)
+        actual = calculate_state_value_function(State(0, 3), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
         assert actual == 5.36
 
     def test_state_00(self):
-        actual = calculate_state_value_function_for_random_policy(State(0, 0), self.state_value_matrix, 0.9)
+        actual = calculate_state_value_function(State(0, 0), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
         assert actual == 3.3025
 
     def test_state_04(self):
-        actual = calculate_state_value_function_for_random_policy(State(0, 4), self.state_value_matrix, 0.9)
+        actual = calculate_state_value_function(State(0, 4), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
         assert actual == 1.48
 
     def test_state_11(self):
-        actual = calculate_state_value_function_for_random_policy(State(1, 1), self.state_value_matrix, 0.9)
+        actual = calculate_state_value_function(State(1, 1), self.state_value_matrix, 0.9, Policy.RANDOM_POLICY)
         assert actual == 2.9925
