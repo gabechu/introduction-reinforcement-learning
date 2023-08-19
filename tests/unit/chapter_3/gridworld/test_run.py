@@ -7,19 +7,6 @@ from src.chapter_3.gridworld.run import calculate_state_value_function_for_rando
 from src.chapter_3.gridworld.state import State
 
 
-@fixture
-def state_value_matrix() -> np.ndarray:
-    return np.array(
-        [
-            [3.3, 8.8, 4.4, 5.3, 1.5],
-            [1.5, 3.0, 2.3, 1.9, 0.5],
-            [0.1, 0.7, 0.7, 0.4, -0.4],
-            [-1.0, 0.4, -0.4, -0.6, -1.2],
-            [-1.9, -1.3, -1.2, -1.4, -2.0],
-        ]
-    )
-
-
 class TestStateValueFunctionForRandomPolicy(TestCase):
     def setUp(self) -> None:
         self.state_value_matrix = np.array(
