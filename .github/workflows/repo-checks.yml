@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.9"
+          - "3.11"
 
     steps:
       - uses: actions/checkout@v3
@@ -31,7 +31,10 @@ jobs:
           poetry install
       - name: Lint
         run: |
-          make linting
+          poetry run ruff check src tests
+      - name: Typing
+        run: |
+          poetry run pyright src tests
       - name: Test with pytest
         run: |
           make unit-test
