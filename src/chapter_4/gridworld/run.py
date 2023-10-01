@@ -19,9 +19,7 @@ logger = logging.getLogger(__file__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-def calculate_state_value_function(
-    state: State, state_value_matrix: np.ndarray, discount_factor: float, policy: Enum
-) -> float:
+def evaluate_a_policy(state: State, state_value_matrix: np.ndarray, discount_factor: float, policy: Enum) -> float:
     q_values = []
     for action in Action:
         next_state = get_next_state(action=action, current_state=state)
@@ -44,7 +42,7 @@ def calculate_state_value_function(
             raise NotImplementedError()
 
 
-def run_iterative_calculation(policy: Policy, iterations: int = 1000):
+def run_iterative_policy_evaluation(policy: Policy, iterations: int = 5000):
     states = build_states()
     state_value_matrix = build_state_value_matrix()
 
@@ -53,8 +51,8 @@ def run_iterative_calculation(policy: Policy, iterations: int = 1000):
         # sweep states and update
         for state in states:
             old_state_value = get_state_value(state=state, state_value_matrix=state_value_matrix)
-            new_state_value = calculate_state_value_function(
-                state=state, state_value_matrix=state_value_matrix, discount_factor=0.9, policy=policy
+            new_state_value = evaluate_a_policy(
+                state=state, state_value_matrix=state_value_matrix, discount_factor=1.0, policy=policy
             )
 
             update_state_value_matrix(
@@ -74,5 +72,5 @@ def run_iterative_calculation(policy: Policy, iterations: int = 1000):
 
 
 if __name__ == "__main__":
-    run_iterative_calculation(Policy.RANDOM_POLICY)
+    run_iterative_policy_evaluation(Policy.RANDOM_POLICY)
     # run_iterative_calculation(Policy.OPTIMAL_POLICY)
