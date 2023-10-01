@@ -1,5 +1,4 @@
 import logging
-from enum import Enum
 
 import numpy as np
 
@@ -19,7 +18,7 @@ logger = logging.getLogger(__file__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-def evaluate_a_policy(state: State, state_value_matrix: np.ndarray, discount_factor: float, policy: Enum) -> float:
+def evaluate_a_policy(state: State, state_value_matrix: np.ndarray, discount_factor: float, policy: Policy) -> float:
     q_values = []
     for action in Action:
         next_state = get_next_state(action=action, current_state=state)
