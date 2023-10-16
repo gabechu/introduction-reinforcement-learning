@@ -1,21 +1,20 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import numpy.typing as npt
 
 
 def reciprocal_function(n: int) -> float:
     return 1 / n
 
 
-def cumsum_of_reciprocal(steps: int) -> float:
+def cumsum_of_reciprocal(steps: int) -> np.ndarray:
     return np.array([reciprocal_function(i + 1) for i in range(steps)]).cumsum()
 
 
-def cumsum_of_square_of_reciprocal(steps: int) -> float:
+def cumsum_of_square_of_reciprocal(steps: int) -> np.ndarray:
     return np.array([reciprocal_function(i + 1) ** 2 for i in range(steps)]).cumsum()
 
 
-def plot_array(array: npt.NDArray, label: str):
+def plot_array(array: np.ndarray, label: str):
     plt.plot(array, label=label)
     plt.legend()
 
