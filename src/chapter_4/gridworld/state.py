@@ -11,30 +11,33 @@ class State:
     x: int
     y: int
 
-    def is_wall(self) -> bool:
+    @property
+    def is_terminal_state(self) -> bool:
         if self.x == 0 and self.y == 0:
             return True
         elif self.x == 3 and self.y == 3:
             return True
+        else:
+            return False
 
+    @property
     def is_off_grid(self) -> bool:
         if 0 <= self.x <= (GRID_SIZE - 1) and 0 <= self.y <= (GRID_SIZE - 1):
-            return True
-        return False
+            return False
+        return True
 
 
 def _regularize_state(new_state: State, old_state: State) -> State:
     """Fixes state when the agent is taken to a location off the grid or hit a wall."""
-    match new_state:
-        case new_state.is_wall:
-            return old_state
-        case new_state.is_off_grid:
-            return old_state
-        case _:
-            return new_state
+    if new_state.is_terminal_state:
+        return old_state
+    elif new_state.is_off_grid:
+        return old_state
+    else:
+        return new_state
 
 
-def _normal_state_transition(current_state: State, action: Action) -> State:
+def _state_transition(current_state: State, action: Action) -> State:
     match action:
         case action.UP:
             return State(x=current_state.x - 1, y=current_state.y)
@@ -49,12 +52,12 @@ def _normal_state_transition(current_state: State, action: Action) -> State:
 def get_next_state(current_state: State, action: Action) -> State:
     """Get the location of the agent after taking the action, regardless of whether
     the agent goes off the grid or not."""
-    # special state transitions -- shortcuts in the game
-    if current_state.is_wall:
+    # terminal states
+    if current_state.is_terminal_state:
         return current_state
 
-    # normal state transitions
-    new_state = _normal_state_transition(current_state, action)
+    # state transitions
+    new_state = _state_transition(current_state, action)
     return _regularize_state(new_state=new_state, old_state=current_state)
 
 

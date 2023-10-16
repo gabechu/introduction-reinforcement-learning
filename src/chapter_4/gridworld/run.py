@@ -20,15 +20,14 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 def evaluate_a_policy(state: State, state_value_matrix: np.ndarray, discount_factor: float, policy: Policy) -> float:
     q_values = []
+
     for action in Action:
         next_state = get_next_state(action=action, current_state=state)
-        next_reward = calculate_reward(current_state=state, action=action)
+        reward = calculate_reward(current_state=state, action=action)
         # The probabilities of both p(r | s, a, s') and p(s' | s, a) are one. So they are omitted. The reason that
         # those probabilities are zero is that given the current state and an action, the outcomes for both reward
         # and the next state are deterministic
-        q_value = next_reward + discount_factor * get_state_value(
-            state=next_state, state_value_matrix=state_value_matrix
-        )
+        q_value = reward + discount_factor * get_state_value(state=next_state, state_value_matrix=state_value_matrix)
         q_values.append(q_value)
 
     match policy:
