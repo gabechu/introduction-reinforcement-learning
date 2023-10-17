@@ -1,17 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import numpy.typing as npt
 
 
-def cumsum_of_constant(steps: int, constant: int) -> float:
+def cumsum_of_constant(steps: int, constant: float) -> np.ndarray:
     return np.array([constant] * steps).cumsum()
 
 
-def cumsum_of_square_of_constant(steps: int, constant) -> float:
+def cumsum_of_square_of_constant(steps: int, constant: float) -> np.ndarray:
     return np.array([constant**2 for _ in range(steps)]).cumsum()
 
 
-def plot_array(array: npt.NDArray, label: str):
+def plot_array(array: np.ndarray, label: str):
     plt.plot(array, label=label)
     plt.legend()
 
