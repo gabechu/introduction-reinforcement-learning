@@ -13,18 +13,11 @@ class State:
 
     @property
     def is_terminal_state(self) -> bool:
-        if self.x == 0 and self.y == 0:
-            return True
-        elif self.x == 3 and self.y == 3:
-            return True
-        else:
-            return False
+        return (self.x, self.y) in ((0, 0), (3, 3))
 
     @property
     def is_off_grid(self) -> bool:
-        if 0 <= self.x <= (GRID_SIZE - 1) and 0 <= self.y <= (GRID_SIZE - 1):
-            return False
-        return True
+        return not (0 <= self.x <= (GRID_SIZE - 1) and 0 <= self.y <= (GRID_SIZE - 1))
 
 
 def _regularize_state(new_state: State, old_state: State) -> State:
