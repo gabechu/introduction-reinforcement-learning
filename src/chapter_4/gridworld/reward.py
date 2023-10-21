@@ -1,5 +1,5 @@
 from src.chapter_4.gridworld.action import Action
-from src.chapter_4.gridworld.state import State, get_next_state
+from src.chapter_4.gridworld.state import State
 
 
 def calculate_reward(current_state: State, action: Action) -> int:
