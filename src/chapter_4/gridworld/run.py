@@ -18,9 +18,8 @@ logger = logging.getLogger(__file__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-def evaluate_a_policy(state: State, state_value_matrix: np.ndarray, discount_factor: float, policy: Policy) -> float:
+def evaluate_policy(state: State, state_value_matrix: np.ndarray, discount_factor: float, policy: Policy) -> float:
     q_values = []
-
     for action in Action:
         next_state = get_next_state(action=action, current_state=state)
         reward = calculate_reward(current_state=state, action=action)
@@ -49,7 +48,7 @@ def run_iterative_policy_evaluation(policy: Policy, iterations: int = 5000):
         # sweep states and update
         for state in states:
             old_state_value = get_state_value(state=state, state_value_matrix=state_value_matrix)
-            new_state_value = evaluate_a_policy(
+            new_state_value = evaluate_policy(
                 state=state, state_value_matrix=state_value_matrix, discount_factor=1.0, policy=policy
             )
 

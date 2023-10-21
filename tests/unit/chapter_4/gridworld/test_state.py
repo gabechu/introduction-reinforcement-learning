@@ -63,3 +63,10 @@ def test_get_next_state_on_down_move_within_grid():
     expected_result = State(x=2, y=1)
 
     assert result == expected_result
+
+
+def test_get_next_state_on_left_move_for_state_01():
+    result = get_next_state(State(x=0, y=1), Action.LEFT)
+    expected_result = State(x=0, y=0)
+
+    assert result == expected_result

@@ -21,13 +21,10 @@ class State:
 
 
 def _regularize_state(new_state: State, old_state: State) -> State:
-    """Fixes state when the agent is taken to a location off the grid or hit a wall."""
-    if new_state.is_terminal_state:
+    """Fixes state when the agent is taken to a location off the grid."""
+    if new_state.is_off_grid:
         return old_state
-    elif new_state.is_off_grid:
-        return old_state
-    else:
-        return new_state
+    return new_state
 
 
 def _state_transition(current_state: State, action: Action) -> State:
